@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ruleta con Pelota</title>
+  <style>
+      body {
+      font-family: Arial, sans-serif;
+    }
+    #rouletteContainer {
+      width: 400px;
+      height: 400px;
+      position: relative;
+      overflow: hidden;
+    }
+    #roulette {
+      width: 100%;
+      height: 100%;
+      border: 4px solid #000;
+      border-radius: 50%;
+      position: absolute;
+      background-image: conic-gradient(
+        #FF0000 0deg, /* Rojo - 0 */
+        #FFFFFF 0deg, /* Blanco - 0 */
+        #FFFFFF 30deg, /* Blanco - 1 */
+        #000000 30deg, /* Negro - 1 */
+        #000000 60deg, /* Negro - 2 */
+        #FF0000 60deg, /* Rojo - 2 */
+        #FF0000 90deg, /* Rojo - 3 */
+        #000000 90deg, /* Negro - 3 */
+        #000000 120deg, /* Negro - 4 */
+        #FF0000 120deg, /* Rojo - 4 */
+        #FF0000 150deg, /* Rojo - 5 */
+        #000000 150deg, /* Negro - 5 */
+        #000000 180deg, /* Negro - 6 */
+        #FF0000 180deg, /* Rojo - 6 */
+        #FF0000 210deg, /* Rojo - 7 */
+        #000000 210deg, /* Negro - 7 */
+        #000000 240deg, /* Negro - 8 */
+        #FF0000 240deg, /* Rojo - 8 */
+        #FF0000 270deg, /* Rojo - 9 */
+        #000000 270deg, /* Negro - 9 */
+        #000000 300deg, /* Negro - 10 */
+        #FF0000 300deg, /* Rojo - 10 */
+        #FF0000 330deg, /* Rojo - 11 */
+        #000000 330deg, /* Negro - 11 */
+        #000000 360deg, /* Negro - 12 */
+        #FF0000 360deg /* Rojo - 12 */
+      );
+      transition: transform 3s ease-out;
+    }
+    .number {
+      position: absolute;
+      color: #fff;
+      font-size: 20px;
+      font-weight: bold;
+      transform-origin: 50% 100%;
+    }
+    .number::before {
+      content: attr(data-number);
+      position: absolute;
+      top: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    #ball {
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      display: none;
+      z-index: 1;
+    }
+    #spinButton {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .player-container {
+      margin-top: 30px;
+    }
+    .player-info {
+      font-size: 18px;
+    }
+    .player-fichas {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .input-container {
+      margin-top: 10px;
+    }
+    .input-container label {
+      font-size: 16px;
+    }
+    .input-container input {
+      padding: 4px;
+      font-size: 16px;
+    }
+    
+    .reglas{
+      position: absolute;
+      left: 40%;
+      top: 10%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Ruleta con Pelota</h1>
+  
+  <div id="rouletteContainer">
+    <div id="roulette">
+      <div class="number" style="transform: rotate(0deg);" data-number="0">0</div>
+      <div class="number" style="transform: rotate(36deg);" data-number="32">32</div>
+      <div class="number" style="transform: rotate(72deg);" data-number="15">15</div>
+      <div class="number" style="transform: rotate(108deg);" data-number="19">19</div>
+      <div class="number" style="transform: rotate(144deg);" data-number="4">4</div>
+      <div class="number" style="transform: rotate(180deg);" data-number="21">21</div>
+      <div class="number" style="transform: rotate(216deg);" data-number="2">2</div>
+      <div class="number" style="transform: rotate(252deg);" data-number="25">25</div>
+      <div class="number" style="transform: rotate(288deg);" data-number="17">17</div>
+      <div class="number" style="transform: rotate(324deg);" data-number="34">34</div>
+      <div class="number" style="transform: rotate(360deg);" data-number="6">6</div>
+      <div class="number" style="transform: rotate(396deg);" data-number="27">27</div>
+      <div class="number" style="transform: rotate(432deg);" data-number="13">13</div>
+      <div class="number" style="transform: rotate(468deg);" data-number="36">36</div>
+      <div class="number" style="transform: rotate(504deg);" data-number="11">11</div>
+      <div class="number" style="transform: rotate(540deg);" data-number="30">30</div>
+      <div class="number" style="transform: rotate(576deg);" data-number="8">8</div>
+      <div class="number" style="transform: rotate(612deg);" data-number="23">23</div>
+      <div class="number" style="transform: rotate(648deg);" data-number="10">10</div>
+      <div class="number" style="transform: rotate(684deg);" data-number="5">5</div>
+      <div class="number" style="transform: rotate(720deg);" data-number="24">24</div>
+      <div class="number" style="transform: rotate(756deg);" data-number="16">16</div>
+      <div class="number" style="transform: rotate(792deg);" data-number="33">33</div>
+      <div class="number" style="transform: rotate(828deg);" data-number="1">1</div>
+      <div class="number" style="transform: rotate(864deg);" data-number="20">20</div>
+      <div class="number" style="transform: rotate(900deg);" data-number="14">14</div>
+      <div class="number" style="transform: rotate(936deg);" data-number="31">31</div>
+      <div class="number" style="transform: rotate(972deg);" data-number="9">9</div>
+      <div class="number" style="transform: rotate(1008deg);" data-number="22">22</div>
+      <div class="number" style="transform: rotate(1044deg);" data-number="18">18</div>
+      <div class="number" style="transform: rotate(1080deg);" data-number="29">29</div>
+      <div class="number" style="transform: rotate(1116deg);" data-number="7">7</div>
+      <div class="number" style="transform: rotate(1152deg);" data-number="28">28</div>
+      <div class="number" style="transform: rotate(1188deg);" data-number="12">12</div>
+      <div class="number" style="transform: rotate(1224deg);" data-number="35">35</div>
+      <div class="number" style="transform: rotate(1260deg);" data-number="3">3</div>
+      <div class="number" style="transform: rotate(1296deg);" data-number="26">26</div>
+    </div>
+      <div class="number" style="transform: rotate(120deg);" data-number="4">4</div>
+      <!-- ... -->
+    </div>
+    <div id="ball"></div>
+  </div>
+
+  <button id="spinButton" onclick="spinRoulette()">Girar</button>
+    <!-- Jugador 1 -->
+  <div class="player-container">
+    <div class="player-info">Jugador 1</div>
+    <div>Fichas: <span class="player-fichas" id="player1Fichas">100</span></div>
+    <div class="input-container">
+      <label for="player1Bet">Apuesta:</label>
+      <input type="number" id="player1Bet" min="1" max="10" value="1">
+    </div>
+  </div>
+
+  <!-- Jugador 2 -->
+  <div class="player-container">
+    <div class="player-info">Jugador 2</div>
+    <div>Fichas: <span class="player-fichas" id="player2Fichas">100</span></div>
+    <div class="input-container">
+      <label for="player2Bet">Apuesta:</label>
+      <input type="number" id="player2Bet" min="1" max="10" value="1">
+    </div>
+  </div>
+  <div class="reglas"><h2>Si el numero es par gana el juagador 1, mientras que si es inpar gana el jugador 2</h2> </div>
+  <script>
+    const roulette = document.getElementById('roulette');
+    const ball = document.getElementById('ball');
+    const player1FichasDisplay = document.getElementById('player1Fichas');
+    const player2FichasDisplay = document.getElementById('player2Fichas');
+    const player1BetInput = document.getElementById('player1Bet');
+    const player2BetInput = document.getElementById('player2Bet');
+    let player1Fichas = 100;
+    let player2Fichas = 100;
+
+    function spinRoulette() {
+      // Obtener las apuestas de los jugadores
+      const player1Bet = parseInt(player1BetInput.value);
+      const player2Bet = parseInt(player2BetInput.value);
+
+      // Verificar que los jugadores tengan suficientes fichas para apostar
+      if (player1Bet <= player1Fichas && player2Bet <= player2Fichas) {
+        // Reducir las fichas apostadas
+        player1Fichas -= player1Bet;
+        player2Fichas -= player2Bet;
+
+        // Actualizar la pantalla con las fichas restantes
+        player1FichasDisplay.textContent = player1Fichas;
+        player2FichasDisplay.textContent = player2Fichas;
+
+        const randomRotation = 3600 + Math.floor(Math.random() * 360);
+        const randomPosition = Math.floor(Math.random() * 37);
+
+        roulette.style.transition = 'transform 3s ease-out';
+        roulette.style.transform = `rotate(${randomRotation}deg)`;
+
+        setTimeout(() => {
+          ball.style.transform = `translate(-50%, -50%) scale(1)`;
+          ball.style.display = 'block';
+          const angle = 360 - randomPosition * 10;
+          const ballTop = roulette.offsetTop + roulette.offsetHeight / 2 - 10;
+          const ballLeft = roulette.offsetLeft + roulette.offsetWidth / 2 - 10;
+          ball.style.top = `${ballTop}px`;
+          ball.style.left = `${ballLeft}px`;
+
+          setTimeout(() => {
+            ball.style.display = 'none';
+            ball.style.transform = `translate(-50%, -50%) scale(0)`;
+
+            // Calcular el resultado del giro
+            const winningNumber = parseInt(roulette.children[randomPosition].getAttribute('data-number'));
+            const player1Win = player1Bet > player2Bet ? player1Bet : player2Bet;
+
+            if (winningNumber % 2 === 0) {
+              // Si el número es par, gana el Jugador 1
+              player1Fichas += player1Win * 2;
+            } else {
+              // Si el número es impar, gana el Jugador 2
+              player2Fichas += player1Win * 2;
+            }
+
+            // Actualizar la pantalla con las fichas ganadas
+            player1FichasDisplay.textContent = player1Fichas;
+            player2FichasDisplay.textContent = player2Fichas;
+          }, 2000);
+        }, 3000);
+      } else {
+        alert('No tienes suficientes fichas para apostar esa cantidad.');
+      }
+    }
+  </script>
+</body>
+</html>
